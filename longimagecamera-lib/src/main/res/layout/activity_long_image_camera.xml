@@ -7,8 +7,8 @@
     tools:context="com.wajahatkarim3.longimagecamera.LongImageCameraActivity">
 
 
-    <ImageView
-        android:id="@+id/imageView"
+    <com.google.android.cameraview.CameraView
+        android:id="@+id/cameraView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"

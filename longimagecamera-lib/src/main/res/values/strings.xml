@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LongImageCamera-Lib</string>
+    <string name="dialog_title">Use Camera?</string>
+    <string name="dialog_message">Let this app use camera to help you capture pictures you need!</string>
 </resources>
