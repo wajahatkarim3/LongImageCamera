@@ -24,21 +24,21 @@
         app:srcCompat="@android:color/holo_blue_dark" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSnap"
         android:layout_width="99dp"
         android:layout_height="44dp"
+        android:layout_marginLeft="118dp"
+        android:layout_marginRight="8dp"
         android:text="Snap"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.966"
-        android:layout_marginLeft="118dp"
+        app:layout_constraintHorizontal_bias="0.324"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/button2"
-        android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.324" />
+        app:layout_constraintRight_toLeftOf="@+id/btnDone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.966" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnDone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -48,7 +48,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgRecent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
