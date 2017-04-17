@@ -1,6 +1,7 @@
 package com.wajahatkarim3.longimagecamera;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -27,6 +28,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.cameraview.CameraView;
@@ -50,6 +52,7 @@ public class LongImageCameraActivity extends AppCompatActivity {
     Button btnSnap, btnDone;
     ImageView imgRecent;
     CameraView cameraView;
+    ProgressBar progressBar;
 
     boolean isFirstImage = true;
     ArrayList<Bitmap> bitmapsList = new ArrayList<>();
@@ -66,8 +69,10 @@ public class LongImageCameraActivity extends AppCompatActivity {
         btnDone = (Button) findViewById(R.id.btnDone);
         imgRecent = (ImageView) findViewById(R.id.imgRecent);
         cameraView = (CameraView) findViewById(R.id.cameraView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         imgRecent.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
 
         btnSnap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,18 +324,25 @@ public class LongImageCameraActivity extends AppCompatActivity {
         btnDone.setEnabled(false);
         btnSnap.setEnabled(false);
 
+        cameraView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
         final String tmpImg = String.valueOf(System.currentTimeMillis()) + ".png";
 
-        final String destDirectoryPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator + "ocr" + File.separator).getAbsolutePath();
+        File dstDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), getString(R.string.app_name));
+        dstDir.mkdirs();
+
+
+        final String destDirectoryPath = dstDir.getAbsolutePath();
         final Bitmap bitmapToSave = finalBitmap;
 
         getBackgroundHandler().post(new Runnable() {
             @Override
             public void run() {
-                File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), tmpImg);
+                File file = new File(destDirectoryPath, tmpImg);
                 OutputStream os = null;
                 try {
-                    os = new FileOutputStream(destDirectoryPath + tmpImg);
+                    os = new FileOutputStream(destDirectoryPath + File.pathSeparator + tmpImg);
                     bitmapToSave.compress(Bitmap.CompressFormat.PNG, 100, os);
 
                     MediaScannerConnection.scanFile(LongImageCameraActivity.this, new String[] { (destDirectoryPath + tmpImg) }, new String[] { "image/png" }, null);
@@ -348,12 +360,12 @@ public class LongImageCameraActivity extends AppCompatActivity {
                         }
                     }
 
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             btnDone.setEnabled(true);
                             btnSnap.setEnabled(true);
+                            progressBar.setVisibility(View.GONE);
                         }
                     });
 
