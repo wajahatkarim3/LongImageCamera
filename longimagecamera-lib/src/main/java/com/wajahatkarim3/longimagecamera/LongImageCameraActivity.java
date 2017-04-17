@@ -21,9 +21,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -287,22 +289,27 @@ public class LongImageCameraActivity extends AppCompatActivity {
             if (isFirstImage)
             {
                 imgRecent.setVisibility(View.VISIBLE);
+
+                Animation downAnimation = AnimationUtils.loadAnimation(LongImageCameraActivity.this, R.anim.move_down_anim);
+                cameraView.startAnimation(downAnimation);
             }
 
-            Bitmap bitmapOriginal = BitmapFactory.decodeByteArray(data,0,data.length);
+            //Bitmap bitmapOriginal = BitmapFactory.decodeByteArray(data,0,data.length);
 
             BitmapFactory.Options options=new BitmapFactory.Options();
             options.inPurgeable = true;
             options.inSampleSize = 2;
             Bitmap bitmap = BitmapFactory.decodeByteArray(data,0,data.length, options);
 
-            bitmapsList.add(bitmapOriginal);
+            bitmapsList.add(bitmap);
 
             imgRecent.setImageBitmap(bitmap);
 
             Log.d(TAG, "btnSnapClick: ");
+
             Animation animation = AnimationUtils.loadAnimation(LongImageCameraActivity.this, R.anim.move_up_anim);
             imgRecent.startAnimation(animation);
+
 
         }
     };
