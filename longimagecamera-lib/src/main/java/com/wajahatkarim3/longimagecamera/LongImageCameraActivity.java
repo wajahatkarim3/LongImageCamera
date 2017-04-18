@@ -51,6 +51,11 @@ public class LongImageCameraActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_STORAGE = 1247;
     public final String TAG = LongImageCameraActivity.class.getSimpleName();
 
+    public enum ImageMergeMode {
+        HORIZONTAL,
+        VERTICAL
+    }
+
     Button btnSnap;
     ImageButton btnDone, btnFlashMode;
     ImageView imgRecent;
@@ -62,6 +67,8 @@ public class LongImageCameraActivity extends AppCompatActivity {
     private Handler mBackgroundHandler;
 
     Bitmap finalBitmap;
+
+    ImageMergeMode mergeMode = ImageMergeMode.HORIZONTAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,26 +160,51 @@ public class LongImageCameraActivity extends AppCompatActivity {
     {
         if (bitmapsList.size() <= 0) return;
 
-        int width = bitmapsList.get(0).getWidth();
-        int height = 0;
-
-        for (Bitmap bitmap : bitmapsList)
+        if (mergeMode == ImageMergeMode.VERTICAL)
         {
-            height += bitmap.getHeight();
+            int width = bitmapsList.get(0).getWidth();
+            int height = 0;
+
+            for (Bitmap bitmap : bitmapsList)
+            {
+                height += bitmap.getHeight();
+            }
+
+            finalBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+            Canvas canvas = new Canvas(finalBitmap);
+            float tempHeight = 0;
+
+            for (int i=0; i<bitmapsList.size(); i++)
+            {
+                Bitmap bitmap = bitmapsList.get(i);
+                canvas.drawBitmap(bitmap, 0f, tempHeight, null);
+                tempHeight += bitmap.getHeight();
+            }
         }
-
-        finalBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(finalBitmap);
-        float tempHeight = 0;
-
-        for (int i=0; i<bitmapsList.size(); i++)
+        else if (mergeMode == ImageMergeMode.HORIZONTAL)
         {
-            Bitmap bitmap = bitmapsList.get(i);
-            canvas.drawBitmap(bitmap, 0f, tempHeight, null);
-            tempHeight += bitmap.getHeight();
-        }
+            int height = bitmapsList.get(0).getHeight();
+            int width = 0;
 
+            for (Bitmap bitmap : bitmapsList)
+            {
+                width += bitmap.getWidth();
+            }
+
+            finalBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+            Canvas canvas = new Canvas(finalBitmap);
+
+            float tempWidth = 0;
+
+            for (int i=0; i<bitmapsList.size(); i++)
+            {
+                Bitmap bitmap = bitmapsList.get(i);
+                canvas.drawBitmap(bitmap, tempWidth, 0f, null);
+                tempWidth += bitmap.getWidth();
+            }
+        }
 
         checkForFileWritePermission();
     }
