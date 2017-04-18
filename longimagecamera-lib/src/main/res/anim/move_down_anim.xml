@@ -6,6 +6,6 @@
 
     <translate
         android:fromYDelta="0%p"
-        android:toYDelta="11%p"
+        android:toYDelta="13%p"
         android:duration="50" />
 </set>

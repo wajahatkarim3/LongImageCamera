@@ -3,6 +3,7 @@ package com.wajahatkarim3.longimagecamera;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -337,10 +338,11 @@ public class LongImageCameraActivity extends AppCompatActivity {
             options.inPurgeable = true;
             options.inSampleSize = 2;
             Bitmap bitmap = BitmapFactory.decodeByteArray(data,0,data.length, options);
+            Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth()*75/100, bitmap.getHeight());
 
-            bitmapsList.add(bitmap);
+            bitmapsList.add(croppedBitmap);
 
-            imgRecent.setImageBitmap(bitmap);
+            imgRecent.setImageBitmap(croppedBitmap);
 
             Log.d(TAG, "btnSnapClick: ");
 
@@ -358,6 +360,8 @@ public class LongImageCameraActivity extends AppCompatActivity {
         btnFlashMode.setEnabled(false);
 
         cameraView.setVisibility(View.INVISIBLE);
+        btnDone.setVisibility(View.INVISIBLE);
+        btnFlashMode.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
 
         final String tmpImg = String.valueOf(System.currentTimeMillis()) + ".png";
@@ -401,8 +405,14 @@ public class LongImageCameraActivity extends AppCompatActivity {
                             btnFlashMode.setEnabled(true);
                             progressBar.setVisibility(View.GONE);
                             btnDone.setVisibility(View.GONE);
+                            btnFlashMode.setVisibility(View.VISIBLE);
+                            btnSnap.setVisibility(View.VISIBLE);
                             isFirstImage = true;
                             bitmapsList.clear();
+
+                            Intent ii = new Intent(LongImageCameraActivity.this, PreviewLongImageActivity.class);
+                            ii.putExtra("imageName", destDirectoryPath + File.separator + tmpImg);
+                            startActivity(ii);
                         }
                     });
 

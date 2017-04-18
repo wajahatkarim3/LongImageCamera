@@ -23,7 +23,6 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
         android:background="@drawable/capture_btn_drawable"
         />
 
@@ -31,7 +30,6 @@
         android:id="@+id/btnDone"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="12dp"
         android:layout_marginRight="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -45,7 +43,6 @@
         android:id="@+id/btnFlashMode"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="12dp"
         android:layout_marginLeft="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"

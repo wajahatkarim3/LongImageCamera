@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wajahatkarim3.longimagecamera.PreviewLongImageActivity">
+
+    <com.wajahatkarim3.longimagecamera.TouchImageView
+        android:id="@+id/imgLongPreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView android:id="@+id/imgClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:tint="@android:color/white"
+        />
+
+</RelativeLayout>
