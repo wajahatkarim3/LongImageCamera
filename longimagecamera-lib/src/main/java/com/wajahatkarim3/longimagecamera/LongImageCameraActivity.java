@@ -27,6 +27,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -49,7 +50,8 @@ public class LongImageCameraActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_STORAGE = 1247;
     public final String TAG = LongImageCameraActivity.class.getSimpleName();
 
-    Button btnSnap, btnDone;
+    Button btnSnap;
+    ImageButton btnDone, btnFlashMode;
     ImageView imgRecent;
     CameraView cameraView;
     ProgressBar progressBar;
@@ -66,13 +68,15 @@ public class LongImageCameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_long_image_camera);
 
         btnSnap = (Button) findViewById(R.id.btnSnap);
-        btnDone = (Button) findViewById(R.id.btnDone);
+        btnDone = (ImageButton) findViewById(R.id.btnDone);
+        btnFlashMode = (ImageButton) findViewById(R.id.btnFlashMode);
         imgRecent = (ImageView) findViewById(R.id.imgRecent);
         cameraView = (CameraView) findViewById(R.id.cameraView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         imgRecent.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+        btnDone.setVisibility(View.GONE);
 
         btnSnap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +92,18 @@ public class LongImageCameraActivity extends AppCompatActivity {
             }
         });
 
+        btnFlashMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeFlashMode();
+            }
+        });
+
         checkForCameraPermission();
 
 
         cameraView.addCallback(cameraCallback);
+        cameraView.setFlash(CameraView.FLASH_AUTO);
     }
 
     @Override
@@ -110,6 +122,25 @@ public class LongImageCameraActivity extends AppCompatActivity {
     protected void onPause() {
         cameraView.stop();
         super.onPause();
+    }
+
+    public void changeFlashMode()
+    {
+        if (cameraView.getFlash() == CameraView.FLASH_AUTO)
+        {
+            cameraView.setFlash(CameraView.FLASH_ON);
+            btnFlashMode.setImageResource(R.drawable.ic_flash_on);
+        }
+        else if (cameraView.getFlash() == CameraView.FLASH_ON)
+        {
+            cameraView.setFlash(CameraView.FLASH_OFF);
+            btnFlashMode.setImageResource(R.drawable.ic_flash_off);
+        }
+        else if (cameraView.getFlash() == CameraView.FLASH_OFF)
+        {
+            cameraView.setFlash(CameraView.FLASH_AUTO);
+            btnFlashMode.setImageResource(R.drawable.ic_flash_auto);
+        }
     }
 
     public void btnSnapClick(View view)
@@ -294,6 +325,7 @@ public class LongImageCameraActivity extends AppCompatActivity {
             if (isFirstImage)
             {
                 imgRecent.setVisibility(View.VISIBLE);
+                btnDone.setVisibility(View.VISIBLE);
 
                 Animation downAnimation = AnimationUtils.loadAnimation(LongImageCameraActivity.this, R.anim.move_down_anim);
                 cameraView.startAnimation(downAnimation);
@@ -323,6 +355,7 @@ public class LongImageCameraActivity extends AppCompatActivity {
     {
         btnDone.setEnabled(false);
         btnSnap.setEnabled(false);
+        btnFlashMode.setEnabled(false);
 
         cameraView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -342,10 +375,10 @@ public class LongImageCameraActivity extends AppCompatActivity {
                 File file = new File(destDirectoryPath, tmpImg);
                 OutputStream os = null;
                 try {
-                    os = new FileOutputStream(destDirectoryPath + File.pathSeparator + tmpImg);
+                    os = new FileOutputStream(destDirectoryPath + File.separator + tmpImg);
                     bitmapToSave.compress(Bitmap.CompressFormat.PNG, 100, os);
 
-                    MediaScannerConnection.scanFile(LongImageCameraActivity.this, new String[] { (destDirectoryPath + tmpImg) }, new String[] { "image/png" }, null);
+                    MediaScannerConnection.scanFile(LongImageCameraActivity.this, new String[] { (destDirectoryPath + File.separator + tmpImg) }, new String[] { "image/png" }, null);
 
                     Toast.makeText(getApplicationContext(), "Image Saved Successfully!", Toast.LENGTH_LONG).show();
 
@@ -365,7 +398,11 @@ public class LongImageCameraActivity extends AppCompatActivity {
                         public void run() {
                             btnDone.setEnabled(true);
                             btnSnap.setEnabled(true);
+                            btnFlashMode.setEnabled(true);
                             progressBar.setVisibility(View.GONE);
+                            btnDone.setVisibility(View.GONE);
+                            isFirstImage = true;
+                            bitmapsList.clear();
                         }
                     });
 
