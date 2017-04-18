@@ -2,9 +2,11 @@ package com.wajahatkarim3.longimagecamera;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.MergeCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -49,6 +51,7 @@ public class LongImageCameraActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1002;
     private static final int MY_PERMISSIONS_REQUEST_STORAGE = 1247;
+
     public final String TAG = LongImageCameraActivity.class.getSimpleName();
 
     public enum ImageMergeMode {
@@ -68,7 +71,7 @@ public class LongImageCameraActivity extends AppCompatActivity {
 
     Bitmap finalBitmap;
 
-    ImageMergeMode mergeMode = ImageMergeMode.HORIZONTAL;
+    ImageMergeMode mergeMode = ImageMergeMode.VERTICAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +112,13 @@ public class LongImageCameraActivity extends AppCompatActivity {
 
         checkForCameraPermission();
 
-
         cameraView.addCallback(cameraCallback);
         cameraView.setFlash(CameraView.FLASH_AUTO);
+
+        if (getIntent().getExtras() != null && getIntent().hasExtra("mergeMode"))
+        {
+            mergeMode = (ImageMergeMode) getIntent().getExtras().get("mergeMode");
+        }
     }
 
     @Override
@@ -453,11 +460,6 @@ public class LongImageCameraActivity extends AppCompatActivity {
         });
     }
 
-
-
-
-
-
     private Handler getBackgroundHandler() {
         if (mBackgroundHandler == null) {
             HandlerThread thread = new HandlerThread("background");
@@ -465,6 +467,19 @@ public class LongImageCameraActivity extends AppCompatActivity {
             mBackgroundHandler = new Handler(thread.getLooper());
         }
         return mBackgroundHandler;
+    }
+
+    public static void launch(Context context)
+    {
+        Intent ii = new Intent(context, LongImageCameraActivity.class);
+        context.startActivity(ii);
+    }
+
+    public static void launch(Context context, ImageMergeMode mergeMode)
+    {
+        Intent ii = new Intent(context, LongImageCameraActivity.class);
+        ii.putExtra("mergeMode", mergeMode);
+        context.startActivity(ii);
     }
 
 }

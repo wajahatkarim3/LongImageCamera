@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent ii = new Intent(this, LongImageCameraActivity.class);
-        startActivity(ii);
+        LongImageCameraActivity.launch(this);
     }
 }
