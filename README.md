@@ -80,6 +80,7 @@ You can use customized ```ImageView``` with support of gestures for zoom/move/ro
 ```
 # Libs used in this Library
 * CameraView (https://github.com/google/cameraview) by Google
+* TouchImageView (https://github.com/MikeOrtiz/TouchImageView)
 
 Developed By
 ============
