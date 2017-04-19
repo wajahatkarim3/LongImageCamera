@@ -45,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
             String imageFileName = data.getStringExtra(LongImageCameraActivity.IMAGE_PATH_KEY);
 
             TouchImageView imageView = (TouchImageView) findViewById(R.id.imageView);
+            imageView.setImageURI(Uri.parse(imageFileName));
 
+            /*
             Bitmap d = BitmapFactory.decodeFile(imageFileName);
             int newHeight = (int) ( d.getHeight() * (512.0 / d.getWidth()) );
             Bitmap putImage = Bitmap.createScaledBitmap(d, 512, newHeight, true);
             imageView.setImageBitmap(putImage);
+            */
 
             Log.e(TAG, "onActivityResult: " + imageFileName );
         }
