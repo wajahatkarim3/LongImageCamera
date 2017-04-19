@@ -1,1 +1,1 @@
-include ':app', ':longimagecamera-lib', ':cameraview'
+include ':app', ':longimagecamera-lib'

@@ -16,7 +16,7 @@
 
 package com.google.android.cameraview;
 
-import android.annotation.SuppressLint;
+//import android.annotation.SuppressLint;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Build;
@@ -106,7 +106,7 @@ class Camera1 extends CameraViewImpl {
     }
 
     // Suppresses Camera#setPreviewTexture
-    @SuppressLint("NewApi")
+    //@SuppressLint("NewApi")
     void setUpPreview() {
         try {
             if (mPreview.getOutputClass() == SurfaceHolder.class) {

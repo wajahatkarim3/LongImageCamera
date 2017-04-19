@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.wajahatkarim3.LongImageCamera'
     PUBLISH_ARTIFACT_ID = 'LongImageCamera'
-    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_VERSION = '1.0.1'
 }
 
 android {
@@ -25,6 +25,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/base'
+        main.java.srcDirs += 'src/main/api9'
+        main.java.srcDirs += 'src/main/api14'
+        main.java.srcDirs += 'src/main/api21'
+        main.java.srcDirs += 'src/main/api23'
+    }
 }
 
 dependencies {
@@ -33,10 +40,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile project(':cameraview')
+    //compile project(':cameraview')
     compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0'
-    compile 'com.android.support:design:25.2.0'
+    //compile 'com.android.support.constraint:constraint-layout:1.0.0'
+    //compile 'com.android.support:design:25.2.0'
     testCompile 'junit:junit:4.12'
 }
 

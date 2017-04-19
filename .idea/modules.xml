@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LongImageCamera-Library.iml" filepath="$PROJECT_DIR$/LongImageCamera-Library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cameraview/cameraview.iml" filepath="$PROJECT_DIR$/cameraview/cameraview.iml" />
       <module fileurl="file://$PROJECT_DIR$/longimagecamera-lib/longimagecamera-lib.iml" filepath="$PROJECT_DIR$/longimagecamera-lib/longimagecamera-lib.iml" />
     </modules>
   </component>

@@ -24,6 +24,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wajahatkarim3.longimagecamera.R;
+
 class SurfaceViewPreview extends PreviewImpl {
 
     final SurfaceView mSurfaceView;
