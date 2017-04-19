@@ -1,13 +1,18 @@
 package com.wajahatkarim3.longimagecamera.demo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.wajahatkarim3.longimagecamera.LongImageCameraActivity;
+import com.wajahatkarim3.longimagecamera.TouchImageView;
 
 import java.io.File;
 
@@ -20,7 +25,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LongImageCameraActivity.launch(this);
+        Button cameraButton = (Button) findViewById(R.id.button);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LongImageCameraActivity.launch(MainActivity.this);
+            }
+        });
+
+
     }
 
     @Override
@@ -29,12 +42,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && requestCode == LongImageCameraActivity.LONG_IMAGE_RESULT_CODE)
         {
-            String path = data.getStringExtra(LongImageCameraActivity.IMAGE_PATH_KEY);
+            String imageFileName = data.getStringExtra(LongImageCameraActivity.IMAGE_PATH_KEY);
 
-            ImageView imageView = (ImageView) findViewById(R.id.imageView);
-            imageView.setImageURI(Uri.parse(path));
+            TouchImageView imageView = (TouchImageView) findViewById(R.id.imageView);
 
-            Log.e(TAG, "onActivityResult: " + path );
+            Bitmap d = BitmapFactory.decodeFile(imageFileName);
+            int newHeight = (int) ( d.getHeight() * (512.0 / d.getWidth()) );
+            Bitmap putImage = Bitmap.createScaledBitmap(d, 512, newHeight, true);
+            imageView.setImageBitmap(putImage);
+
+            Log.e(TAG, "onActivityResult: " + imageFileName );
         }
     }
 }
