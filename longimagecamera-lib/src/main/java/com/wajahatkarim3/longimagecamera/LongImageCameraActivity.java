@@ -1,6 +1,7 @@
 package com.wajahatkarim3.longimagecamera;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -51,6 +52,8 @@ public class LongImageCameraActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1002;
     private static final int MY_PERMISSIONS_REQUEST_STORAGE = 1247;
+    public static final String IMAGE_PATH_KEY = "imagePathKey";
+    public static final int LONG_IMAGE_RESULT_CODE = 1234;
 
     public final String TAG = LongImageCameraActivity.class.getSimpleName();
 
@@ -72,6 +75,7 @@ public class LongImageCameraActivity extends AppCompatActivity {
     Bitmap finalBitmap;
 
     ImageMergeMode mergeMode = ImageMergeMode.VERTICAL;
+    boolean showPreview = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -423,7 +427,7 @@ public class LongImageCameraActivity extends AppCompatActivity {
 
                     MediaScannerConnection.scanFile(LongImageCameraActivity.this, new String[] { (destDirectoryPath + File.separator + tmpImg) }, new String[] { "image/png" }, null);
 
-                    Toast.makeText(getApplicationContext(), "Image Saved Successfully!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Image Saved Successfully!", Toast.LENGTH_LONG).show();
 
                 } catch (IOException e) {
                     Log.w(TAG, "Cannot write to " + file, e);
@@ -449,9 +453,17 @@ public class LongImageCameraActivity extends AppCompatActivity {
                             isFirstImage = true;
                             bitmapsList.clear();
 
-                            Intent ii = new Intent(LongImageCameraActivity.this, PreviewLongImageActivity.class);
-                            ii.putExtra("imageName", destDirectoryPath + File.separator + tmpImg);
-                            startActivity(ii);
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra(IMAGE_PATH_KEY, destDirectoryPath + File.separator + tmpImg);
+                            setResult(Activity.RESULT_OK, resultIntent);
+                            finish();
+
+                            if (showPreview)
+                            {
+                                Intent ii = new Intent(LongImageCameraActivity.this, PreviewLongImageActivity.class);
+                                ii.putExtra("imageName", destDirectoryPath + File.separator + tmpImg);
+                                startActivity(ii);
+                            }
                         }
                     });
 
@@ -469,17 +481,17 @@ public class LongImageCameraActivity extends AppCompatActivity {
         return mBackgroundHandler;
     }
 
-    public static void launch(Context context)
+    public static void launch(Activity activity)
     {
-        Intent ii = new Intent(context, LongImageCameraActivity.class);
-        context.startActivity(ii);
+        Intent ii = new Intent(activity, LongImageCameraActivity.class);
+        activity.startActivityForResult(ii, LONG_IMAGE_RESULT_CODE);
     }
 
-    public static void launch(Context context, ImageMergeMode mergeMode)
+    public static void launch(Activity activity, ImageMergeMode mergeMode)
     {
-        Intent ii = new Intent(context, LongImageCameraActivity.class);
+        Intent ii = new Intent(activity, LongImageCameraActivity.class);
         ii.putExtra("mergeMode", mergeMode);
-        context.startActivity(ii);
+        activity.startActivityForResult(ii, LONG_IMAGE_RESULT_CODE);
     }
 
 }
