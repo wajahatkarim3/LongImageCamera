@@ -1,6 +1,6 @@
 LongImageCamera
 ============
-[ ![Download](https://api.bintray.com/packages/wajahatkarim3/LongImageCamera/com.wajahatkarim3.longimagecamera/images/download.svg) ](https://bintray.com/wajahatkarim3/LongImageCamera/com.wajahatkarim3.longimagecamera/_latestVersion) [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
+[ ![Download](https://api.bintray.com/packages/wajahatkarim3/LongImageCamera/com.wajahatkarim3.longimagecamera/images/download.svg) ](https://bintray.com/wajahatkarim3/LongImageCamera/com.wajahatkarim3.longimagecamera/_latestVersion) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-LongImageCamera-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5618) [![API](https://img.shields.io/badge/API-15%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=15)
  
 A camera view to capture long image merged from small captured images as it is in [Shoparoo](https://play.google.com/store/apps/details?id=infoscout.shoparoo&hl=en) app! This library uses [CameraView](https://github.com/google/cameraview) from Google as the backbone of camera functionality and adds auto-support of creating long or wide images from multiple images. This library includes:
 * Built-in Camera UI and activity
