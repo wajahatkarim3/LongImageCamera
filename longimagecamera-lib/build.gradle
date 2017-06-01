@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.wajahatkarim3.LongImageCamera'
     PUBLISH_ARTIFACT_ID = 'LongImageCamera'
-    PUBLISH_VERSION = '1.0.1'
+    PUBLISH_VERSION = '1.0.2'
 }
 
 android {
@@ -31,6 +31,9 @@ android {
         main.java.srcDirs += 'src/main/api14'
         main.java.srcDirs += 'src/main/api21'
         main.java.srcDirs += 'src/main/api23'
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
